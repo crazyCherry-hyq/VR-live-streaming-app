@@ -9,7 +9,7 @@
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录/注册",
-        "enablePullDownRefresh":true//开启下拉刷新
+        "enablePullDownRefresh":true
 			}
 		}, {
 			"path": "pages/myVist/index",
@@ -26,7 +26,6 @@
   "easycom": {
     "autoscan": true,
     "custom": {
-      // uni-ui 规则如下配置
       "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
     }
   },

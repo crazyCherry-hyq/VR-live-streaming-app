@@ -3,7 +3,7 @@
 		<view class="title">登录/注册</view>
 		<uni-forms ref="form" :rules="rules" :modelValue="form">
 			<uni-forms-item name="phone">
-				<uni-easyinput type="text" v-model="form.phone" placeholder="请输入手机号码" />
+				<uni-easyinput type="text" v-model="form.phone" placeholder="请输入手机号码1" />
 			</uni-forms-item>
 			<uni-forms-item name="code">
 				<uni-easyinput type="text" trim="all" v-model="form.code" placeholder="请输入验证码" />
@@ -41,11 +41,30 @@ export default {
   },
   methods: {
     handleSubmitForm() {
-      this.$refs.form.validate().then(res => {
-        console.log('表单数据信息：', res)
-      }).catch(err => {
-        console.log('表单错误信息：', err)
-      })
+			uni.getProvider({
+				service: 'oauth',
+				success: res => {
+					console.log('provider', res.provider)
+					if (~res.provider.indexOf('weixin')) {
+						uni.login({
+							provider: 'weixin',
+							success: res => {
+								console.log(res)
+								console.log(JSON.stringify(res))
+								console.log(this.$request)
+								this.$request('/user/login', { js_code: res.code }, 'post').then(() => {
+									
+								})
+							}
+						});
+					}
+				}
+			});
+      // this.$refs.form.validate().then(res => {
+      //   console.log('表单数据信息：', res)
+      // }).catch(err => {
+      //   console.log('表单错误信息：', err)
+      // })
     }
   }
 }
